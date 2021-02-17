@@ -1,0 +1,25 @@
+{
+  "name": "midterm-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build src/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.20.0",
+    "eslint-plugin-react": "^7.22.0",
+    "parcel-bundler": "^1.12.4",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "eve": "^0.5.4",
+    "oauth": "^0.9.15"
+  }
+}
