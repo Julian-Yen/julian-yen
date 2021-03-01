@@ -2,6 +2,7 @@
 just to inspect what was wrong with the white space
 * { border: 1px solid red; }
 */
+
 html{
     margin: 0;
     padding:0;
@@ -12,7 +13,12 @@ body {
     background: url(/index-background.929a126d.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    font: 1.2em / 1.5 Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", sans-serif ;
+    font-size: 1.2em;
+    font-weight: 100;
+    line-height: 1.5;
+    
+
     /*overflow: hidden*/
     margin:0;
     padding:0;
@@ -59,7 +65,7 @@ header{
     max-width: 700px;
 }
 
-h1, p{
+h1, p, h3, h2{
     color:beige;
     background-color: rgba(0, 0, 0, 0.596); 
     display:inline; 
@@ -67,6 +73,16 @@ h1, p{
 
 h1{
     font-size: 3em;
+    font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", sans-serif ;   
+}
+
+h2{
+    font-size: 3em;
+    font-weight:400;
+}
+
+h3{
+    font-weight:100;
 }
 
 /*.page {overflow:hidden;}*/
@@ -76,6 +92,8 @@ h1{
     grid-gap:20px;
     gap:20px;
     padding: 50px;
+    padding-left: 10px;
+    padding-top: 10px;
     align-items: center;
     justify-content: space-around;
 }
@@ -99,6 +117,7 @@ button {
     display: inline-block;
     cursor: pointer;
     text-align: center;
+    overflow:hidden;
     transition-duration: 0.4s;
  }
  
