@@ -1,47 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Homepage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/konva@7.0.3/konva.min.js"></script>
+    <script ttype="text/javascript" src="sounds.js"></script>
+    <!--<script ttype="text/javascript" src="drawsound.js" defer></script>
     <script src="snap.svg-min.js" defer></script>
-    <script src="shape-sound.js" defer></script>
+    <script src="shape-sound.js" defer></script>-->
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap');
-      </style>
+    </style>
   </head>
 
   <body>
-
     <nav>
-      <div class = "stick">
+      <div class="stick">
         <div class="arrange">
-          <a href = "#"><button>Homepage</button></a>
-            <a href = "about.html"><button>About</button></a>
-            <a href = "context.html"><button>Site Context</button></a>
-            <a href = "paths.html"><button>Sonic Paths</button></a>
-            <a href = "people.html"><button>Sonic Persona</button></a>
+          <a href="#"><button>Homepage</button></a>
+          <a href="about.html"><button>About</button></a>
+          <a href="context.html"><button>Site Context</button></a>
+          <a href="paths.html"><button>Sonic Paths</button></a>
+          <a href="people.html"><button>Sonic Persona</button></a>
         </div>
-    </div>
+      </div>
     </nav>
 
     <div class="container">
-        <div class="right">
-          <header>
-              <h2 class="tw"><span>萬籟有聲</span></h2><br>
-              <h1><span>Ten Thousand Sounds in Wanhua</span></h1>
-            </header>
-          <div class="info">
-            <p>This Capstone Project explores the relationship between sounds and urban space by presenting
-                the vibrant sonic landscape around Longshan Temple, Wanhua District, Taipei city.</p><br>
-                <br>
-            <p>Explore random sounds found in Wanhua in the Homepage by hovering over the shapes, or move to different sections different sonic experiences</p>
-          </div>
+      <div class="right">
+        <header>
+          <h2 class="tw"><span>萬籟有聲</span></h2>
+          <br />
+          <h1><span>Ten Thousand Sounds in Wanhua</span></h1>
+        </header>
+        <div class="info">
+          <p>
+            This Capstone Project explores the relationship between sounds and
+            urban space by presenting the vibrant sonic landscape around
+            Longshan Temple, Wanhua District, Taipei city.
+          </p>
+          <br />
+          <br />
+          <p>
+            Explore random sounds found in Wanhua in the Homepage by hovering
+            over the shapes, or move to different sections different sonic
+            experiences
+          </p>
         </div>
+      </div>
     </div>
-    <canvas></canvas>
-    <audio id="sound" src="sounds/scripture.mp3" preload="auto"></audio>
-  </body>
+    <div id="box"></div>
+    <!--<canvas></canvas>
+    <audio id="sound" src="sounds/scripture.mp3" preload="auto"></audio>-->
+    <script>
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const audioContext = new AudioContext();
+      //create an environment for the file to be in the buffer
 
+      // first we need to create a stage
+      var stage = new Konva.Stage({
+        container: 'box', // id of container <div>
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      // then create layer
+      var layer = new Konva.Layer();
+      function random(min, max) {
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        return num;
+      }
+      for (let i = 0; i < sounds.length; i++) {
+        // create our shape
+        var circle = new Konva.Circle({
+          x: random(50, 500),
+          y: stage.height() / 2 + i * random(100, 120),
+          radius: random(30, 40),
+          fill: 'Azure',
+        });
+        let playSound;
+        let audio;
+        var filename = sounds[i]['path'];
+        console.log(filename);
+
+        //control the play and pause
+        function playback() {
+          playSound = audioContext.createBufferSource();
+          playSound.buffer = audio;
+          playSound.connect(audioContext.destination);
+          playSound.start(audioContext.currentTime);
+          var fill = this.fill() == 'yellow' ? '#00D2FF' : 'yellow';
+          this.fill(fill);
+          layer.draw();
+        }
+
+        function pause() {
+          playSound.stop();
+          var fill = this.fill() == 'Azure' ? 'F0FFFF' : 'Azure';
+          this.fill(fill);
+          layer.draw();
+        }
+
+        fetch(filename)
+          .then((data) => data.arrayBuffer())
+          .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+          .then((decodeAudio) => {
+            audio = decodeAudio;
+          });
+
+        circle.on('mouseover', playback);
+        circle.on('mouseout', pause);
+        //circle.on("mouseout", function () {
+        //playSound.stop(audioContext.currentTime);
+        //});
+        // add the shape to the layer
+        layer.add(circle);
+      }
+
+      // add the layer to the stage
+      stage.add(layer);
+
+      // draw the image
+      layer.draw();
+    </script>
+  </body>
 </html>
