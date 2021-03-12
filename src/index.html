@@ -58,7 +58,6 @@
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       const audioContext = new AudioContext();
       //create an environment for the file to be in the buffer
-
       // first we need to create a stage
       var stage = new Konva.Stage({
         container: 'box', // id of container <div>
@@ -67,6 +66,11 @@
       });
       // then create layer
       var layer = new Konva.Layer();
+      let id;
+      let count = 0;
+      let lastShape;
+      let nowShape;
+
       function random(min, max) {
         const num = Math.floor(Math.random() * (max - min + 1)) + min;
         return num;
@@ -74,10 +78,13 @@
       for (let i = 0; i < sounds.length; i++) {
         // create our shape
         var circle = new Konva.Circle({
-          x: random(50, 500),
+          x: 50 + i * 50,
+          //random(50, 500),
           y: stage.height() / 2 + i * random(100, 120),
           radius: random(30, 40),
           fill: 'Azure',
+          id: 'sound' + i,
+          draggable: true,
         });
         let playSound;
         let audio;
@@ -111,12 +118,43 @@
 
         circle.on('mouseover', playback);
         circle.on('mouseout', pause);
-        //circle.on("mouseout", function () {
-        //playSound.stop(audioContext.currentTime);
-        //});
+
+        //connect circles with lines
+        circle.on('click', function () {
+          id = '#' + this.id();
+          console.log('count = ' + count);
+
+          if (count > 0) {
+            nowShape = stage.find(id)[0];
+            var line = new Konva.Line({
+              points: [
+                lastShape.attrs.x,
+                lastShape.attrs.y,
+                nowShape.attrs.x,
+                nowShape.attrs.y,
+              ],
+              stroke: 'azure',
+              strokeWidth: 4,
+              lineCap: 'round',
+              lineJoin: 'round',
+            });
+            layer.add(line);
+          }
+          lastShape = stage.find(id)[0];
+          console.log('position is at ' + lastShape.attrs.x);
+          count++;
+        });
         // add the shape to the layer
         layer.add(circle);
       }
+
+      //make lines
+      /*function drawLine() {
+        if (count > 0) {
+          lastShape = stage.find(id)[0];
+          console.log(shape.attrs.x);
+        }
+      }*/
 
       // add the layer to the stage
       stage.add(layer);
