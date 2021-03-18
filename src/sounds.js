@@ -4,7 +4,7 @@ sounds = [
     path: './mp3/scripture.mp3',
     Time: 'Afternoon',
   },
-  {
+  /*{
     path: './mp3/水秀.mp3',
     Time: 'Day',
   },
@@ -15,5 +15,5 @@ sounds = [
   {
     path: './mp3/擲筊.mp3',
     Time: 'Night',
-  },
+  },*/
 ];
