@@ -35,17 +35,16 @@
       const audioContext = new AudioContext();
 
       for (let i = 0; i < sounds.length; i++) {
-
-
         var filename = sounds[i]['path'];
         console.log(filename);
-
+        let audio;
         fetch(filename)
           .then((data) => data.arrayBuffer())
           .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
           .then((decodeAudio) => {
             audio = decodeAudio;
           });
+      }
     </script>
   </body>
 </html>

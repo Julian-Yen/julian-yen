@@ -90,6 +90,8 @@
 
         var filename = sounds[i]['path'];
         console.log(filename);
+        let playSound;
+        let audio;
 
         fetch(filename)
           .then((data) => data.arrayBuffer())
@@ -99,8 +101,7 @@
           });
 
         //control the play and pause
-        let playSound;
-        let audio;
+
         function playback() {
           playSound = audioContext.createBufferSource();
           playSound.buffer = audio;
