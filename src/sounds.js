@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
 sounds = [
   {
-    path: './mp3/scripture.mp3',
+    path: '/mp3/scripture.mp3',
     Time: 'Afternoon',
   },
   /*{
