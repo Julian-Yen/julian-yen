@@ -75,6 +75,7 @@
         const num = Math.floor(Math.random() * (max - min + 1)) + min;
         return num;
       }
+
       for (let i = 0; i < sounds.length; i++) {
         // create our shape
         var circle = new Konva.Circle({
@@ -86,12 +87,20 @@
           id: 'sound' + i,
           draggable: true,
         });
-        let playSound;
-        let audio;
+
         var filename = sounds[i]['path'];
         console.log(filename);
 
+        fetch(filename)
+          .then((data) => data.arrayBuffer())
+          .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+          .then((decodeAudio) => {
+            audio = decodeAudio;
+          });
+
         //control the play and pause
+        let playSound;
+        let audio;
         function playback() {
           playSound = audioContext.createBufferSource();
           playSound.buffer = audio;
@@ -108,13 +117,6 @@
           this.fill(fill);
           layer.draw();
         }
-
-        fetch(filename)
-          .then((data) => data.arrayBuffer())
-          .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-          .then((decodeAudio) => {
-            audio = decodeAudio;
-          });
 
         circle.on('mouseover', playback);
         circle.on('mouseout', pause);
@@ -144,6 +146,7 @@
           console.log('position is at ' + lastShape.attrs.x);
           count++;
         });
+
         // add the shape to the layer
         layer.add(circle);
       }
