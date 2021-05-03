@@ -9,13 +9,27 @@ html{
     height: 100%;  
 }
 
-body {
+.right {
     background: url(images/index-background.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    width: 100%;
+    height: 100%; 
+}
+
+.before{
+    background: url(images/index-background2.jpg) center no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+    height: 100%; 
+}
+
+body {
+
     font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", sans-serif ;
     font-size: 1.2em;
-    font-weight: 100;
+    font-weight: 400;
     line-height: 1.5;
     
 
@@ -54,35 +68,37 @@ nav{
 
 header{
     padding-top: 100px;
-    float:middle;
+    padding-bottom:100px;
     text-align:center;
 }
 
 .info{
     padding: 100px;
+    padding-left: 150px;
     padding-bottom: 50px;
-    text-align:center;
-    max-width: 700px;
+    text-align:left;
+    height: 100%;
 }
 
 h1, p, h3, h2{
     color:beige;
-    background-color: rgba(0, 0, 0, 0.596); 
+    padding: 20px;
     display:inline; 
 }
 
 h1{
     font-size: 3em;
-    font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", sans-serif ;   
 }
 
 h2{
     font-size: 3em;
     font-weight:400;
+    display:inline-block;
 }
 
 h3{
     font-weight:100;
+    display:inline-block;
 }
 
 /*.page {overflow:hidden;}*/
@@ -128,9 +144,134 @@ button {
  }
 
 
+
+
 canvas {
     position: absolute;
-    top: 300;
-    left: 0;
     z-index: 1;
+    float:none;
+    margin: 0px;
+    top: 100px;
+    
 }
+
+#waveform {
+    position: fixed;
+    top: calc(50% - 100px);
+    right: 0;
+    z-index: 0;
+}
+
+#waveform2 {
+    position: fixed;
+    top: calc(50% - 100px);
+    right: 0;
+    z-index: 0;
+}
+
+ #contain{
+     height:100%;
+     background: url(images/path-background2.jpg) center no-repeat;
+     background-size: cover;
+     background-attachment: fixed;
+ }
+
+ #clear{
+    position: relative;
+    top: 100px;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    z-index: 2;
+ }
+ #load{
+    position: relative;
+    top: 200px;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    z-index: 2;
+ }
+
+ .konvajs-content{
+     z-index: 1;
+     width:100%;
+ }
+ p{
+    display:block;
+    padding-bottom: 30px;
+    margin:0;
+ }
+
+ #explanation{
+     background-color:lightslategrey;
+ }
+
+ .walk, .conintro, footer{
+     background-color:rgba(7, 15, 22, 1);
+ }
+
+ .walktext, #endtext, .beforetext{
+    padding: 100px;
+    padding-left: 150px;
+    padding-bottom: 50px;
+    /*margin:40px;
+    margin-top:0px;*/
+ }
+ 
+
+ .conintro{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+ .conintrotext{
+    padding: 100px;
+    padding-left: 150px;
+    padding-bottom: 50px;
+    text-align:left;
+    height: 100%;
+ }
+
+ .bgm{
+     background: url(images/play.png) center no-repeat;
+     width:150px;
+     height: 150px;
+     margin: auto;
+     margin-top:100px;
+     background-size: cover;
+     opacity: 0.8;
+     cursor: pointer;
+     transition-duration: 0.2s;
+     z-index: 2
+ }
+
+ .bgm:hover{
+     opacity:1;
+     transition-duration: 0.2s;
+ }
+
+ .bgm.pause{
+    background:url(images/pause.png) center no-repeat;
+         width:150px;
+     height: 150px;
+     margin-top:100px;
+     background-size: cover;
+     opacity: 0.8;
+     cursor: pointer;
+     transition-duration: 0.2s;
+     z-index: 2
+ }
+
+ .bgm.pause:hover{
+    opacity:1;
+    transition-duration: 0.2s;
+}
+ 
+
+ #map{
+     
+     padding: 50px;
+     padding-left: 0px;
+    }

@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Homepage</title>
-    <link rel="stylesheet" href="paths.css" />
+
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="paths.css" />
+    <script src="https://unpkg.com/konva@7.0.3/konva.min.js"></script>
     <script ttype="text/javascript" src="sounds.js"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap');
@@ -26,17 +28,60 @@
         </div>
       </div>
     </nav>
+    <div id="box"></div>
+    <canvas id="waveform" height="200"></canvas>
+    <!--<audio
+      src="mp3/ZOOM0044_晚上廣州街俄羅斯方塊.mp3"
+      controls
+      controlslist="nodownload"
+      onplay="visualize()"
+    ></audio>-->
+    <!--<canvas></canvas>
+    <audio id="sound" src="sounds/scripture.mp3" preload="auto"></audio>-->
     <script>
-      //first load the svg
-      //make different parts clickable and when hovers changes look
-      //clicking on one part of the svg triggers to save a list of names
-      //using the names, make them into an audio buffer and tie it onto a konva circle
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       const audioContext = new AudioContext();
+      //create an environment for the file to be in the buffer
+      // first we need to create a stage
+      var stage = new Konva.Stage({
+        container: 'box', // id of container <div>
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      // then create layer
+      var layer = new Konva.Layer();
+      let id;
+      let count = 0;
+      let lastShape;
+      let nowShape;
+      const w = window.innerWidth;
+
+      //testing the fourier shit
+      const analyserNode = audioContext.createAnalyser();
+      const waveformCanvas = document.querySelector('#waveform');
+      const wfCanvasContext = waveformCanvas.getContext('2d');
+      waveformCanvas.width = w;
+      function random(min, max) {
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        return num;
+      }
 
       for (let i = 0; i < sounds.length; i++) {
+        // create our shape
+        var circle = new Konva.Circle({
+          x: random(50, 1000),
+          y: stage.height() / 2 + i * random(150, 250),
+          radius: random(30, 50),
+          fill: 'rgba (247, 249, 249, 0.9)',
+          id: 'sound' + i,
+          draggable: true,
+          globalCompositeOperation: 'saturation',
+        });
+
+        //do it outside of loop
         var filename = sounds[i]['path'];
         console.log(filename);
+        let playSound;
         let audio;
         fetch(filename)
           .then((data) => data.arrayBuffer())
@@ -44,7 +89,183 @@
           .then((decodeAudio) => {
             audio = decodeAudio;
           });
+
+        //fourier shit
+        function draw() {
+          // only animate while playing (reduces CPU load)
+          requestAnimationFrame(draw);
+          // connect the analyser to the destination
+          //fourier shit
+          analyserNode.minDecibels = -150;
+          analyserNode.fftSize = 1024;
+          let bufferLength = analyserNode.frequencyBinCount;
+          const WIDTH = w;
+          const HEIGHT = 200;
+          let waveformArray = new Uint8Array(bufferLength);
+
+          // time domain visualization
+          analyserNode.getByteTimeDomainData(waveformArray);
+          wfCanvasContext.clearRect(0, 0, WIDTH, HEIGHT);
+          wfCanvasContext.lineWidth = 2;
+          wfCanvasContext.strokeStyle = '#fff';
+          wfCanvasContext.beginPath();
+          const sliceWidth = (WIDTH * 1.0) / bufferLength;
+          let x = 0;
+          for (let i = 0; i < bufferLength; i++) {
+            const v = waveformArray[i] / 128.0;
+            const y = (v * HEIGHT) / 2;
+            if (i === 0) {
+              wfCanvasContext.moveTo(x, y);
+            } else {
+              wfCanvasContext.lineTo(x, y);
+            }
+            x += sliceWidth;
+          }
+          wfCanvasContext.lineTo(
+            waveformCanvas.width,
+            waveformCanvas.height / 2
+          );
+          wfCanvasContext.stroke();
+        }
+        //control the play and pause
+        //for changing sound, can use (e){e.target.fill or something, [this] also works I guess?}
+        function playback() {
+          playSound = audioContext.createBufferSource();
+          playSound.buffer = audio;
+          playSound.connect(analyserNode);
+          analyserNode.connect(audioContext.destination);
+          playSound.start(audioContext.currentTime);
+          var fill = this.fill() == 'yellow' ? '#00D2FF' : 'yellow';
+          this.fill(fill);
+          layer.draw();
+          draw();
+        }
+
+        function pause() {
+          playSound.stop();
+          var fill = this.fill() == 'Azure' ? 'F0FFFF' : 'Azure';
+          this.fill(fill);
+          layer.draw();
+        }
+        //call function vs call function + parameter
+        circle.on('mouseover', playback);
+        circle.on('mouseout', pause);
+
+        //connect circles with lines
+        circle.on('click', function () {
+          id = '#' + this.id();
+          console.log('count = ' + count);
+
+          if (count > 0) {
+            nowShape = stage.find(id)[0];
+            var line = new Konva.Line({
+              points: [
+                lastShape.attrs.x,
+                lastShape.attrs.y,
+                nowShape.attrs.x,
+                nowShape.attrs.y,
+              ],
+              stroke: 'azure',
+              strokeWidth: 4,
+              lineCap: 'round',
+              lineJoin: 'round',
+            });
+            layer.add(line);
+          }
+          lastShape = stage.find(id)[0];
+          console.log('position is at ' + lastShape.attrs.x);
+          count++;
+        });
+
+        // add the shape to the layer
+        layer.add(circle);
       }
+
+      //fourier shit
+      var circ = new Konva.Circle({
+        x: random(50, 500),
+        y: stage.height() / 2,
+        radius: random(30, 50),
+        fill: 'azure',
+        id: 'sound',
+        globalCompositeOperation: 'multiply',
+        draggable: true,
+      });
+
+      //fourier shit
+      let audioNode;
+      let play;
+      var name = sounds[0]['path'];
+      //const analyserNode = audioContext.createAnalyser();
+      fetch(name)
+        .then((data) => data.arrayBuffer())
+        .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+        .then((decodeAudio) => {
+          audioNode = decodeAudio;
+        });
+      function draw2() {
+        // only animate while playing (reduces CPU load)
+        if (!play.paused) requestAnimationFrame(draw);
+        // connect the analyser to the destination
+        //fourier shit
+        analyserNode.minDecibels = -150;
+        analyserNode.fftSize = 1024;
+        let bufferLength = analyserNode.frequencyBinCount;
+        const WIDTH = 700;
+        const HEIGHT = 200;
+        let waveformArray = new Uint8Array(bufferLength);
+
+        // time domain visualization
+        analyserNode.getByteTimeDomainData(waveformArray);
+        wfCanvasContext.clearRect(0, 0, WIDTH, HEIGHT);
+        wfCanvasContext.lineWidth = 2;
+        wfCanvasContext.strokeStyle = '#fff';
+        wfCanvasContext.beginPath();
+        const sliceWidth = (WIDTH * 1.0) / bufferLength;
+        let x = 0;
+        for (let i = 0; i < bufferLength; i++) {
+          const v = waveformArray[i] / 128.0;
+          const y = (v * HEIGHT) / 2;
+          if (i === 0) {
+            wfCanvasContext.moveTo(x, y);
+          } else {
+            wfCanvasContext.lineTo(x, y);
+          }
+          x += sliceWidth;
+        }
+        wfCanvasContext.lineTo(waveformCanvas.width, waveformCanvas.height / 2);
+        wfCanvasContext.stroke();
+      }
+
+      function playback2() {
+        play = audioContext.createBufferSource();
+        play.buffer = audioNode;
+        // create an analyser node
+        play.connect(analyserNode);
+        analyserNode.connect(audioContext.destination);
+        play.start(audioContext.currentTime);
+        draw2();
+      }
+
+      circ.addEventListener('click', playback2);
+      // define the length of result buffers
+
+      layer.add(circ);
+      //make lines
+      /*function drawLine() {
+            if (count > 0) {
+              lastShape = stage.find(id)[0];
+              console.log(shape.attrs.x);
+            }
+          }*/
+
+      // add the layer to the stage
+      stage.add(layer);
+
+      // draw the image
+      layer.draw();
+
+      // create a new media source node using the <audio> element
     </script>
   </body>
 </html>

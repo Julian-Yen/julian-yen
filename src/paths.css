@@ -1,5 +1,7 @@
 body {
-    background: url(images/index-background.jpg) center no-repeat;
+  /*background: linear-gradient(90deg, rgba(25,43,62,1) 0%, rgba(219,215,163,1) 54%, rgba(27,53,65,1) 100%);
+    */
+    background: url(images/path-background2.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
     font: 1.2em / 1.5 Helvetica Neue, Helvetica, Arial, sans-serif;

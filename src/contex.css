@@ -1,14 +1,14 @@
 .player{
     min-width:300px;
-    max-width: 1000px;
     padding:20px;
 }
 
 .container {
 	transition: background 1.2s;
+
 }
 .container.dark {
-	background: hsl(200, 65%, 8%);
+	background: hsl(200, 25%, 76%);
 }
 
 body {
@@ -27,81 +27,100 @@ body {
     grid-column: 2;
 }
 
+section{
+    align-items: center;
+    justify-content: center;
+}
+article{
+    padding: 100px;
+    padding-bottom: 50px;
+    text-align:center;
+    height: 100%;
+}
+
 .longshan{
     grid-row:1;
-    background: url(images/longshan-day.jpg) center no-repeat;
+    background: url(images/longshan_day.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    transition-duration: 1s;
+    transition-duration: 0.7s;
     
 }
 
 .longshan.night{
-    background: url(images/longshan-night.jpeg) center no-repeat;
+    background: url(images/longshan_night.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    transition-duration: 1s;
+    transition-duration: 0.7s;
 }
 
 .park{
     grid-row:2;
-    background: url(images/park-day.jpg) center no-repeat;
+    background: url(images/park_day.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    transition-duration: 1s;
+    transition-duration: 0.7s;
 }
 
 .park.night{
-    background: url(images/park-night.png) center no-repeat;
+    background: url(images/park_night.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    transition-duration: 1s;
+    transition-duration: 0.7s;
 }
 
 .underground{
     grid-row:3;
-    background: url(images/underground-day.jpg) center no-repeat;
+    background: url(images/b1.jpg) center no-repeat;
     background-size: cover;
     background-attachment: fixed;
+
+}
+
+.b2{
+    grid-row:4;
+    background: url(images/b2.jpg) center no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
 }
 
 .toggle{
-    background-image: url(icons/day.svg) center no-repeat;
+    /*background-image: url(icons/day.svg) center no-repeat;
     background-size:cover;
-    background-attachment: fixed; 
-
-    position: fixed;
+    background-attachment: fixed;*/ 
+    position:sticky;
+    float: right;
+    margin: 15px;
     top: 50px;
-    right: 50px;
+    right: 20px;
     z-index: 1;
-    font: 0.6em / 1.5 Helvetica Neue, Helvetica, "Noto Sans TC", Arial, sans-serif;
+    font: 1.4em / 1.5;
+    transition-duration: 0.7s;
 }
 
 
 
 .toggle.night{
     /*background: url(icons/night.png) center no-repeat;*/
+    transition-duration: 0.7s;
 }
 
 
 .stick{
     position: fixed;
-    top: 100px;
+    top: 20px;
     left:20px;
+    z-index: 2;
 }
-
+/*
 header{
     position: fixed;
     top: 20px;
     left:20px;
     padding:10px;
     text-align: left;
-}
-
-.toggled{
-    position: fixed;
-    top: 50px;
-    right: 50px;
-    z-index: 1;
-    font: 0.6em / 1.5 Helvetica Neue, Helvetica, Arial, sans-serif;
+}*/
+.context{
+    position: relative;
 }
