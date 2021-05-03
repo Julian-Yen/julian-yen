@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
 sounds = [
   {
-    path: './mp3/26_Temple_day_children.mp3',
+    path: 'src/mp3/26_Temple_day_children.mp3',
     level: 1,
     time: 15,
   },
