@@ -6,17 +6,17 @@ sounds = [
     time: 15,
   },
   {
-    path: './mp3/26_Temple_Walkhelp.mp3',
+    path: './26_Temple_Walkhelp.mp3',
     level: 1,
     time: 14,
   },
   {
-    path: './mp3/30_Park_day_water_announcements.mp3',
+    path: '/mp3/30_Park_day_water_announcements.mp3',
     level: 1.2,
     time: 16.1,
   },
   {
-    path: './mp3/31_Park_day_watershow.mp3',
+    path: '/src/mp3/31_Park_day_watershow.mp3',
     level: 1.2,
     time: 16.2,
   },
