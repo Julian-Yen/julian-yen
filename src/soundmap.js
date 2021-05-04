@@ -187,6 +187,7 @@ function stopAll() {
     //cancelAnimationFrame(id);
     // To turn off animation
     if (sources[i]) sources[i].stop();
+    if (loopfolder[i]) loopfolder[i].stop();
   }
   gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1);
 
@@ -262,25 +263,24 @@ for (let i = 0; i < 26; i++) {
   console.log(a);
   console.log(b);
   var circle = new Konva.Circle({
-    x: a * 150 - 1450,
-    y: b * 400 - 300 + random(0, 500),
+    x: a * 150 - 1400,
+    y: b * 400 - 300 + random(0, 200),
     radius: random(30, 40),
     fill: 'white',
-    opacity: 1,
-    draggable: true,
+    opacity: 0.8,
     globalCompositeOperation: 'saturation',
   });
 
   //call function vs call function + parameter
   circle.on('mouseover', function () {
     playback(i);
-    var fill = 'black';
+    var fill = 'AntiqueWhite';
     this.fill(fill);
     layer.draw();
   });
   circle.on('mouseout', function () {
     pause();
-    var fill = 'Azure';
+    var fill = 'Thistle';
     this.fill(fill);
     layer.draw();
   });

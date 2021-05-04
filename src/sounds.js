@@ -8,7 +8,7 @@ sounds = [
   {
     path: '26_Temple_Walkhelp.mp3',
     level: 1,
-    time: 14,
+    time: 14.1,
   },
   {
     path: '30_Park_day_water_announcements.mp3',
@@ -18,12 +18,12 @@ sounds = [
   {
     path: '31_Park_day_watershow.mp3',
     level: 1.2,
-    time: 16.2,
+    time: 16.3,
   },
   {
     path: '32_Temple_4pm_reciting.mp3',
     level: 1,
-    time: 16.3,
+    time: 16.5,
   },
   {
     path: '35_Temple_afternoon_blocks.mp3',
@@ -53,7 +53,7 @@ sounds = [
   {
     path: '65_temple_2pm_chanting.mp3',
     level: 1,
-    time: 14,
+    time: 14.5,
   },
   {
     path: '66_park_day_sweeping.mp3',
@@ -88,7 +88,7 @@ sounds = [
   {
     path: '78_B2_4pm_battle.mp3',
     level: 3,
-    time: 16,
+    time: 15.5,
   },
   {
     path: 'B1_Day_ambience.mp3',
@@ -113,12 +113,12 @@ sounds = [
   {
     path: 'Park_day_handwhipping.mp3',
     level: 1.2,
-    time: 14,
+    time: 13.7,
   },
   {
     path: 'Park_day_watershow.mp3',
     level: 1.2,
-    time: 16,
+    time: 15.6,
   },
   {
     path: 'Temple_day_administration.mp3',

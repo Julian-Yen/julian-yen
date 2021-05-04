@@ -22,7 +22,7 @@ body {
     grid-gap: 10px;
 }
 
-.longshan, .park, .underground{
+.longshan, .park, .underground, .b2{
     padding: 100px;
     grid-column: 2;
 }
@@ -32,10 +32,12 @@ section{
     justify-content: center;
 }
 article{
-    padding: 100px;
-    padding-bottom: 50px;
+    margin: 100px;
+    margin-bottom: 50px;
     text-align:center;
     height: 100%;
+
+
 }
 
 .longshan{
@@ -124,3 +126,5 @@ header{
 .context{
     position: relative;
 }
+
+
